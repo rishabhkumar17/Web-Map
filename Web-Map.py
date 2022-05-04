@@ -15,12 +15,18 @@ def color_producer(capital):
 
 map = folium.Map(location=[28.65, 77.25], zoom_start=6, tiles = "Stamen Terrain")
 
-fg = folium.FeatureGroup(name="My Map")
+fgc = folium.FeatureGroup(name="City")
 #add markers
 for lt, ln, name, cp in zip(lat,lon, nam, cap):
-    fg.add_child(folium.CircleMarker(location=[lt, ln], radius=7, popup=name, fill_color=color_producer(cp), color='grey', fill_opacity=0.7))
+    fgc.add_child(folium.CircleMarker(location=[lt, ln], radius=10, popup=name, fill_color=color_producer(cp), color='grey', fill_opacity=0.7))
 
-fg.add_child(folium.GeoJson(data=(open('Indian_States.geojson', 'r', encoding='utf-8-sig').read())))
+fgl = folium.FeatureGroup(name="Layer")
+#add layer
+fgl.add_child(folium.GeoJson(data=open('Indian_States.geojson', 'r', encoding='utf-8-sig').read(),
+style_function=lambda x: {'fillColor':'green'}))
 
-map.add_child(fg)
+map.add_child(fgl)
+map.add_child(fgc)
+map.add_child(folium.LayerControl())
+
 map.save("Map1.html")
