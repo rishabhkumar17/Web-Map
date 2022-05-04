@@ -18,8 +18,9 @@ map = folium.Map(location=[28.65, 77.25], zoom_start=6, tiles = "Stamen Terrain"
 fg = folium.FeatureGroup(name="My Map")
 #add markers
 for lt, ln, name, cp in zip(lat,lon, nam, cap):
-    fg.add_child(folium.CircleMarker(location=[lt, ln], radius=5, popup=name, fill_color=color_producer(cp), color='grey', fill_opacity=0.7))
+    fg.add_child(folium.CircleMarker(location=[lt, ln], radius=7, popup=name, fill_color=color_producer(cp), color='grey', fill_opacity=0.7))
+
+fg.add_child(folium.GeoJson(data=(open('Indian_States.geojson', 'r', encoding='utf-8-sig').read())))
 
 map.add_child(fg)
-
 map.save("Map1.html")
